@@ -1,7 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import StreamProvider from "../components/StreamProvider"; // Import the new component
+import StreamProvider from "../components/StreamProvider";
+import UserRating from "../components/UserRating";
+
 
 interface MovieDetail {
   title: string;
@@ -23,6 +25,7 @@ interface StreamingProvider {
 export default function MovieDetailPage() {
   const { id } = useParams(); // Get movie id from URL
   const [movie, setMovie] = useState<MovieDetail | null>(null);
+
   const [subscriptionServices, setSubscriptionServices] = useState<StreamingProvider[]>([]);
   const [rentServices, setRentServices] = useState<StreamingProvider[]>([]);
   const [buyServices, setBuyServices] = useState<StreamingProvider[]>([]);
@@ -30,8 +33,6 @@ export default function MovieDetailPage() {
   const tmdbApiKey = import.meta.env.VITE_TMDB_API_KEY;
   const movieDetailUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${tmdbApiKey}&language=en-US`;
   const streamProvidersUrl = `https://api.themoviedb.org/3/movie/${id}/watch/providers?api_key=${tmdbApiKey}`;
-
-  let userScore: number = movie?.vote_average ? Math.round(movie.vote_average * 10) : 0
 
   useEffect(() => {
     if (id) {
@@ -77,16 +78,17 @@ export default function MovieDetailPage() {
   </div>
 
   {/* Movie Info (Below Poster) */}
-  <div className="relative mt-[60px] px-4">
-    <h1 className="text-3xl font-bold">{movie.title} ({movie.release_date.split('-')[0]})</h1>
-    <p className="mt-4">{movie.release_date} | {movie.genres.map((genre) => genre.name).join(", ")} | {movie.runtime} minutes </p>
-    
-    <div className={`radial-progress ${userScore >= 70 ? "bg-primary border-primary" : userScore >= 50 ? "bg-warning border-warning" : "bg-error border-error"} text-base-100 border-4 mt-4`}
-        style={{ "--value": userScore } as React.CSSProperties } 
-        aria-valuenow={userScore} role="progressbar"
-    >
-        {`${userScore}%`}
+  <div className="mt-[60px] px-4">
+    <div className="flex items-center">
+        <h1 className="text-3xl font-bold mr-2">{movie.title}</h1>
+        <p className="text-2xl text-gray-400"> {`(${movie.release_date.split('-')[0]})`}</p>
+        <div className={`badge badge-lg ml-3 font-bold ${movie.vote_average >= 7 ? "badge-success" : movie.vote_average >= 5 ? "badge-warning" : "badge-error"}`}>{movie.vote_average.toFixed(1)}</div>
     </div>
+        
+    <p className="mt-2">{movie.release_date} | {movie.genres.map((genre) => genre.name).join(", ")} | {movie.runtime} minutes </p>
+    
+    <UserRating />
+
     <h2 className="color-primary">Overview</h2>
     <p className="mt-2">{movie.overview}</p>
 
