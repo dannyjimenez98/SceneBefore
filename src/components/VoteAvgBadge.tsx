@@ -1,7 +1,7 @@
 
 
 interface VoteAvgBadgeProps {
-    voteAverage: number;
+    voteAverage: number ;
     badgeSize: string; // same size naming convention as tailwind (e.g. sm, md, lg, etc.)
 }
 
@@ -16,8 +16,12 @@ export default function VoteAvgBadge({ voteAverage, badgeSize } : VoteAvgBadgePr
                     ? "badge-success" 
                     : voteAverage >= 5 
                     ? "badge-warning" 
-                    : "badge-error"}`}>
-                {voteAverage.toFixed(1)}
+                    : voteAverage > 0 
+                    ? "badge-error"
+                    : "badge-neutral"
+                }`
+                    }>
+                {voteAverage > 0 ? voteAverage.toFixed(1) : "-"}
             </div>
     </>
   )

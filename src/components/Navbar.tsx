@@ -19,8 +19,10 @@ export default function Navbar() {
         <li>
           <a>Movies</a>
           <ul className="p-2">
-            <li><Link to="/">Popular</Link></li>
-            <li><a>Upcoming</a></li>
+            <li><Link to="/popular">Popular</Link></li>
+            <li><Link to="/now_playing">Now Playing</Link></li>
+            <li><Link to='/upcoming'>Upcoming</Link></li>
+            <li><Link to='/top_rated'>Top Rated</Link></li>
           </ul>
         </li>
         <li><a>Item 3</a></li>
