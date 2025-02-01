@@ -1,36 +1,35 @@
 import { Link } from "react-router-dom";
+import VoteAvgBadge from "./VoteAvgBadge";
 
 interface MovieCardProps {
     id: number;
     title: string;
     poster_path: string;
-    release_date: string;
-    overview: string;
+    vote_average: number;
+    // release_date: string;
+    // overview: string;
 }
 
-function MovieCard({id, title, poster_path, release_date, overview}: MovieCardProps) {
+function MovieCard({id, title, poster_path, vote_average}: MovieCardProps) {
   return (
-      <div className="relative w-[300px] h-[450px] group">
+      <>
         {poster_path && (
-          <>
-            <Link to={`/movie/${id}`} className="w-full h-full">
-                {/* Movie Poster */}
-                <img
-                className="w-full h-full rounded-lg object-cover border border-primary"
-                src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-                alt={`${title} Poster`}
+          <div className="relative border border-secondary hover:border-2 rounded-lg hover:opacity-80 transition bg-secondary">
+            <Link to={`/movie/${id}`}  key={id} className="block">
+                <img 
+                    src={`https://image.tmdb.org/t/p/w500${poster_path}`} 
+                    alt={title} 
+                    className="rounded-t-lg shadow-lg object-cover"
                 />
-    
-                {/* Hover Overlay with Movie Info */}
-                <div className="absolute inset-0 bg-black/80 text-white flex flex-col justify-end p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg border-4 border-primary">
-                <h3 className="text-lg font-semibold">{title}</h3>
-                <p className="text-md mt-1">{release_date?.split('-')[0]}</p>
-                <p className="text-sm mt-1 line-clamp-5">{overview}</p>
-                </div>
+                <span className="absolute top-2 left-2">
+
+                <VoteAvgBadge voteAverage={vote_average} badgeSize="md" />
+                </span>
+                <p className="my-1 items-center text-center font-bold text-sm text-base-300">{title}</p>
             </Link>
-          </>
+          </div>
         )}
-      </div>
+      </>
   )
 }
 

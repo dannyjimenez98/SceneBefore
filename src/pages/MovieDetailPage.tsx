@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import StreamProvider from "../components/StreamProvider";
 import UserRating from "../components/UserRating";
+import VoteAvgBadge from "../components/VoteAvgBadge";
 
 
 interface MovieDetail {
@@ -81,8 +82,8 @@ export default function MovieDetailPage() {
   <div className="mt-[60px] px-4">
     <div className="flex items-center">
         <h1 className="text-3xl font-bold mr-2">{movie.title}</h1>
-        <p className="text-2xl text-gray-400"> {`(${movie.release_date.split('-')[0]})`}</p>
-        <div className={`badge badge-lg ml-3 font-bold ${movie.vote_average >= 7 ? "badge-success" : movie.vote_average >= 5 ? "badge-warning" : "badge-error"}`}>{movie.vote_average.toFixed(1)}</div>
+        <p className="text-2xl text-gray-400 mr-3"> {`(${movie.release_date.split('-')[0]})`}</p>
+        <VoteAvgBadge voteAverage={movie.vote_average} badgeSize="lg" />
     </div>
         
     <p className="mt-2">{movie.release_date} | {movie.genres.map((genre) => genre.name).join(", ")} | {movie.runtime} minutes </p>
