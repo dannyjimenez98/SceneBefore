@@ -5,7 +5,6 @@ import StreamProvider from "../components/StreamProvider";
 import UserRating from "../components/UserRating";
 import VoteAvgBadge from "../components/VoteAvgBadge";
 
-
 interface MovieDetail {
   title: string;
   poster_path: string;
@@ -27,7 +26,9 @@ export default function MovieDetailPage() {
   const { id } = useParams(); // Get movie id from URL
   const [movie, setMovie] = useState<MovieDetail | null>(null);
 
-  const [subscriptionServices, setSubscriptionServices] = useState<StreamingProvider[]>([]);
+  const [subscriptionServices, setSubscriptionServices] = useState<
+    StreamingProvider[]
+  >([]);
   const [rentServices, setRentServices] = useState<StreamingProvider[]>([]);
   const [buyServices, setBuyServices] = useState<StreamingProvider[]>([]);
 
@@ -58,57 +59,65 @@ export default function MovieDetailPage() {
 
   return (
     <>
-  {/* Backdrop Container */}
-  <div
-    className="relative w-full min-w-full max-h-[500px]"
-    style={{ height: "calc(100vw / 2.222222)" }}
-  >
-    <div
-      className="text-white px-4 h-full bg-no-repeat bg-cover flex justify-start items-end"
-      style={{
-        backgroundImage: `linear-gradient(to right, rgba(27, 22, 24, 1) 5%, rgba(0, 0, 0, 0.6) 50%), url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})`,
-      }}
-    >
-      {/* Movie Poster */}
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
-        className="absolute bottom-[-50px] w-[30vw] max-w-[300px] sm:w-[25vw] xs:w-[40vw] rounded-lg border-primary border-2 shadow-lg"
-      />
-    </div>
-  </div>
+      {/* Backdrop Container */}
+      <div
+        className="relative w-full min-w-full max-h-[500px]"
+        style={{ height: "calc(100vw / 2.222222)" }}
+      >
+        <div
+          className="text-white px-4 h-full bg-no-repeat bg-cover flex justify-start items-end"
+          style={{
+            backgroundImage: `linear-gradient(to right, rgba(27, 22, 24, 1) 5%, rgba(0, 0, 0, 0.6) 50%), url(https://image.tmdb.org/t/p/w1280${movie.backdrop_path})`,
+          }}
+        >
+          {/* Movie Poster */}
+          {movie.poster_path ? (
+            <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title}
+              className="absolute bottom-[-50px] w-[30vw] max-w-[300px] sm:w-[25vw] xs:w-[40vw] rounded-lg border-primary border-2 shadow-lg"
+            />
+          ) : (
+            <></>
+          )}
+        </div>
+      </div>
 
-  {/* Movie Info (Below Poster) */}
-  <div className="mt-[60px] px-4">
-    <div className="flex items-center">
-        <h1 className="text-3xl font-bold mr-2">{movie.title}</h1>
-        <p className="text-2xl text-gray-400 mr-3"> {`(${movie.release_date.split('-')[0]})`}</p>
-        <VoteAvgBadge voteAverage={movie.vote_average} badgeSize="lg" />
-    </div>
-        
-    <p className="mt-2">{movie.release_date} | {movie.genres.map((genre) => genre.name).join(", ")} | {movie.runtime} minutes </p>
-    
-    <UserRating />
+      {/* Movie Info (Below Poster) */}
+      <div className="mt-[60px] px-4">
+        <div className="flex items-center">
+          <h1 className="text-3xl font-bold mr-2">{movie.title}</h1>
+          <p className="text-2xl text-gray-400 mr-3">
+            {" "}
+            {`(${movie.release_date.split("-")[0]})`}
+          </p>
+          <VoteAvgBadge voteAverage={movie.vote_average} badgeSize="lg" />
+        </div>
 
-    <h2 className="color-primary">Overview</h2>
-    <p className="mt-2">{movie.overview}</p>
+        <p className="mt-2">
+          {movie.release_date} |{" "}
+          {movie.genres.map((genre) => genre.name).join(", ")} | {movie.runtime}{" "}
+          minutes{" "}
+        </p>
 
-    {/* Streaming Services */}
-    <h2>Where to Watch (US)</h2>
-    <StreamProvider
-      title="Included with Subscription"
-      providers={subscriptionServices}
-    />
-    <StreamProvider title="Available to Rent" providers={rentServices} />
-    <StreamProvider title="Available to Buy" providers={buyServices} />
-    <br />
-    <small>
-      <i>Streaming availability courtesy of JustWatch</i>
-    </small>
-  </div>
+        <UserRating />
 
+        <h2 className="color-primary">Overview</h2>
+        <p className="mt-2">{movie.overview}</p>
+
+        {/* Streaming Services */}
+        <h2>Where to Watch (US)</h2>
+        <StreamProvider
+          title="Included with Subscription"
+          providers={subscriptionServices}
+        />
+        <StreamProvider title="Available to Rent" providers={rentServices} />
+        <StreamProvider title="Available to Buy" providers={buyServices} />
+        <br />
+        <small>
+          <i>Streaming availability courtesy of JustWatch</i>
+        </small>
+      </div>
     </>
-
-
   );
 }
