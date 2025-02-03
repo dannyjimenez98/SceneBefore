@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import SearchBar from "./SearchBar";
 
 export default function Navbar() {
 
@@ -6,6 +7,8 @@ export default function Navbar() {
 
 <>
 <div className="navbar bg-base-200 shadow-sm relative z-1">
+
+{/* Medium or smaller screens */}
   <div className="navbar-start">
     <div className="dropdown">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -30,6 +33,8 @@ export default function Navbar() {
     </div>
     <a className="btn btn-ghost text-xl">SceneBefore</a>
   </div>
+
+  {/* Large Screens */}
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
       <li><a>Home</a></li>
@@ -37,17 +42,20 @@ export default function Navbar() {
         <details>
           <summary>Movies</summary>
           <ul className="p-2 bg-base-300">
-            <li><Link to="/">Popular</Link></li>
-            <li><a>Upcoming</a></li>
+            <li><Link className="whitespace-nowrap" to="/popular">Popular</Link></li>
+            <li><Link className="whitespace-nowrap" to="/now_playing">Now Playing</Link></li>
+            <li><Link className="whitespace-nowrap" to="/upcoming">Upcoming</Link></li>
+            <li><Link className="whitespace-nowrap" to="/top_rated">Top Rated</Link></li>
           </ul>
         </details>
       </li>
       <li><a>Item 3</a></li>
     </ul>
   </div>
+
   <div className="navbar-end">
   <div className="flex gap-2">
-    <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+    <SearchBar />
     <div className="dropdown dropdown-end">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
