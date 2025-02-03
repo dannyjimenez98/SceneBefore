@@ -5,6 +5,7 @@ import NowPlayingPage from './pages/NowPlayingPage';
 import UpcomingPage from './pages/UpcomingPage';
 import TopRatedPage from './pages/TopRatedPage';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import UserProfilePage from './pages/UserProfilePage';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
     <Navbar />
     <div className='container mx-auto max-w-screen-lg px-5 z-[0]'>
       <Routes>
+        <Route path='/user' element={<UserProfilePage />} />
         <Route path='/popular' element={<PopularPage />} />
         <Route path='/upcoming' element={<UpcomingPage />} />
         <Route path='/now_playing' element={<NowPlayingPage />} />

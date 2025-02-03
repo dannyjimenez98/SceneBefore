@@ -118,7 +118,7 @@ export default function Navbar() {
                 className="menu menu-md dropdown-content bg-base-300 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a className="justify-between">Profile</a>
+                  <Link to="/user" className="justify-between">Profile</Link>
                 </li>
                 <li>
                   <a>Settings</a>
