@@ -1,7 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import { useAuth } from "../AuthContext";
 
 export default function Navbar() {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("accessToken")
+
+  const handleLogout = () => {
+    logout();
+    localStorage.removeItem("accessToken")
+    navigate("/login");
+  };
+
   return (
     <>
       <div className="navbar bg-base-300 shadow-sm relative z-1">
@@ -124,7 +136,13 @@ export default function Navbar() {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  {token ? (
+                  <>
+                    <button onClick={handleLogout}>Log Out</button>
+                  </>
+                  ) : (
+                  <Link to="login/">Log In</Link>
+                )}
                 </li>
               </ul>
             </div>
